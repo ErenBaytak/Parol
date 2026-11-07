@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Parol Repair - Recovery GUI (Windows Recovery tarzi, kernel panic pembesi)
+Parol Repair - Recovery GUI 
 Copyright (C) 2026 Ermedsoft - Eren Baytak Yazılım
 GNU GPL v3 or later. Bu program HICBIR GARANTI icermez.
 """
@@ -39,9 +39,7 @@ class Recovery:
         except tk.TclError:
             pass
 
-        fams = tkfont.families()
-        self.fam = "Segoe UI" if "Segoe UI" in fams else (
-            "DejaVu Sans" if "DejaVu Sans" in fams else "Helvetica")
+        self.fam = "Consolas"
 
         self.rows = []
         self.sel = 0
@@ -232,7 +230,7 @@ class Recovery:
         self.title(C.t("view_log"), C.LOG_FILE, 30)
         box = tk.Frame(self.shell, bg=BG)
         box.pack(fill=tk.BOTH, expand=True)
-        txt = tk.Text(box, font=("DejaVu Sans Mono", 10), bg=DARK, fg=TEXT,
+        txt = tk.Text(box, font=("Consolas", 10), bg=DARK, fg=TEXT,
                       insertbackground=ACCENT, wrap=tk.NONE, bd=0)
         scr = tk.Scrollbar(box, command=txt.yview)
         txt.configure(yscrollcommand=scr.set)
@@ -282,7 +280,7 @@ class Recovery:
 
         box = tk.Frame(self.shell, bg=BG)
         box.pack(fill=tk.BOTH, expand=True)
-        self.out = tk.Text(box, font=("DejaVu Sans Mono", 10), bg=DARK, fg=TEXT,
+        self.out = tk.Text(box, font=("Consolas", 10), bg=DARK, fg=TEXT,
                            wrap=tk.WORD, bd=0, height=14)
         scr = tk.Scrollbar(box, command=self.out.yview)
         self.out.configure(yscrollcommand=scr.set)
