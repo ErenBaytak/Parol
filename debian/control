@@ -1,0 +1,13 @@
+Source: parol
+Section: utils
+Priority: optional
+Maintainer: Eren Baytak <bayeren.100@gmail.com>
+Build-Depends: debhelper-compat (= 13), python3-all
+Standards-Version: 5.0.0
+Homepage: https://github.com/erenbaytak/parol
+
+Package: parol
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, python3, python3-gi
+Description: Parol repair utility
+ A tool designed to assist with password and account repair tasks.
