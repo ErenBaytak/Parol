@@ -1,0 +1,3 @@
+#!/bin/bash
+# Parol Repair GUI kisa yolu — (c) 2026 Ermedsoft | GNU GPL v3
+exec /usr/bin/parol gui "$@"

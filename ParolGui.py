@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Parol Repair - Recovery GUI 
+Parol Repair - Recovery GUI (Windows Recovery tarzi, kernel panic pembesi)
 Copyright (C) 2026 Ermedsoft - Eren Baytak Yazılım
 GNU GPL v3 or later. Bu program HICBIR GARANTI icermez.
 """

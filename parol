@@ -1,0 +1,48 @@
+#!/bin/bash
+# Parol Repair baslatici — (c) 2026 Ermedsoft - Eren Baytak Yazılım | GNU GPL v3
+APPDIR="/opt/parol-repair"
+VERSION="4.0.0"
+
+as_root() {
+  if [ "$(id -u)" -eq 0 ]; then "$@"; return $?; fi
+  if command -v sudo >/dev/null 2>&1; then sudo "$@"; return $?; fi
+  echo "root yetkisi gerekli (sudo bulunamadi)." >&2; return 1
+}
+
+run_tui() { as_root /usr/bin/python3 "$APPDIR/Parol.py" "$@"; }
+
+run_gui() {
+  if [ "$(id -u)" -eq 0 ]; then
+    /usr/bin/python3 "$APPDIR/ParolGui.py" "$@"; return $?
+  fi
+  if command -v pkexec >/dev/null 2>&1 && [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]; then
+    pkexec env DISPLAY="${DISPLAY:-}" XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}" \
+      WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-}" XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-}" \
+      LANG="${LANG:-}" /usr/bin/python3 "$APPDIR/ParolGui.py" "$@"
+    return $?
+  fi
+  as_root env LANG="${LANG:-}" /usr/bin/python3 "$APPDIR/ParolGui.py" "$@"
+}
+
+case "${1:-tui}" in
+  tui|term|terminal|-t)  shift || true; run_tui "$@" ;;
+  gui|recovery|-g)       shift || true; run_gui "$@" ;;
+  log|logs)              as_root tail -n 200 /var/log/parol_repair.log ;;
+  version|--version|-v)  echo "Parol Repair $VERSION — (c) 2026 Ermedsoft - Eren Baytak Yazılım | GNU GPL v3" ;;
+  license|--license)     sed -n '1,40p' /usr/share/doc/parol-repair/copyright ;;
+  help|--help|-h)
+cat <<USAGE
+Parol Repair $VERSION  —  (c) 2026 Ermedsoft - Eren Baytak Yazılım
+Kullanim:
+  parol            Terminal (curses) onarim arayuzu
+  parol gui        Windows Recovery tarzı grafik arayuz
+  parol-gui        Ayni grafik arayuz (kisa yol)
+  parol log        Son 200 günlük kaydini göster
+  parol version    Sürüm ve lisans bilgisi
+  parol license    Lisans metni
+Ortam degiskeni:
+  PAROL_LANG=tr|en   Arayüz dilini elle zorla
+USAGE
+  ;;
+  *) echo "Bilinmeyen komut: $1  (parol help)" >&2; exit 2 ;;
+esac

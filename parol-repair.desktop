@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Parol Repair (Recovery)
+Name[tr]=Parol Repair (Kurtarma)
+GenericName=System Repair Tool
+GenericName[tr]=Sistem Onarım Aracı
+Comment=Repair packages, network, audio, graphics, disks and services
+Comment[tr]=Paket, ağ, ses, grafik, disk ve servisleri onarır
+Exec=/usr/bin/parol-gui
+Icon=parol-repair
+Terminal=false
+Categories=System;Settings;Utility;
+Keywords=repair;recovery;apt;fix;onar;kurtarma;
+StartupNotify=true
