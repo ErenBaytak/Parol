@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python3
+
+override_dh_auto_install:
+	# 1. Hedef sistem dizinlerini oluştur
+	install -d "$(CURDIR)/debian/parol/usr/bin"
+	install -d "$(CURDIR)/debian/parol/opt/parol-repair"
+	install -d "$(CURDIR)/debian/parol/etc/profile.d"
+	install -d "$(CURDIR)/debian/parol/usr/share/applications"
+	install -d "$(CURDIR)/debian/parol/usr/share/pixmaps"
+	install -d "$(CURDIR)/debian/parol/usr/share/man/man1"
+
+	# 2. Python kaynak kodlarını ve ana modülleri /opt/parol-repair/ altına kopyala
+	install -m 644 Parol.py "$(CURDIR)/debian/parol/opt/parol-repair/"
+	install -m 644 ParolGui.py "$(CURDIR)/debian/parol/opt/parol-repair/"
+	install -m 644 parol_common.py "$(CURDIR)/debian/parol/opt/parol-repair/"
+
+	# 3. Çalıştırıcı betikleri /usr/bin/ altına kopyala ve çalıştırılabilir yap
+	install -m 755 parol "$(CURDIR)/debian/parol/usr/bin/"
+	install -m 755 parol-gui "$(CURDIR)/debian/parol/usr/bin/"
+
+	# 4. Sistem ayar, masaüstü kısayolu, ikon ve man dosyalarını ilgili yerlerine kopyala
+	install -m 644 parol-repair.sh "$(CURDIR)/debian/parol/etc/profile.d/"
+	install -m 644 parol-repair.desktop "$(CURDIR)/debian/parol/usr/share/applications/"
+	install -m 644 parol-repair.svg "$(CURDIR)/debian/parol/usr/share/pixmaps/"
+	install -m 644 parol.1.gz "$(CURDIR)/debian/parol/usr/share/man/man1/"
